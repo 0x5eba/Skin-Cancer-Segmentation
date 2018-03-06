@@ -14,6 +14,6 @@ Classification and Segmentation with Mark-RCNN of Skin Cancer by ISIC dataset
 ## Results
 
 Original image
-![Alt Text](https://github.com/0x5eba/Skin-Cancer-Segmentation/blob/master/Nei/4554.png)
+<img src="https://github.com/0x5eba/Skin-Cancer-Segmentation/blob/master/Nei/4554.png" width="200" height="200">
 Classify and Segment image
-![Alt Text](https://github.com/0x5eba/Skin-Cancer-Segmentation/blob/master/Nei/4554res.png)
+<img src="https://github.com/0x5eba/Skin-Cancer-Segmentation/blob/master/Nei/4554res.png" width="200" height="200">
