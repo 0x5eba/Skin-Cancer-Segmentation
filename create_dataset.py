@@ -13,8 +13,9 @@ from Mask.model import log
 from Mask.magicwand import SelectionWindow
 
 
-DIRECTORY = "~/DeepLearning/Uqido/NumpyData/"
-
+dir_path = os.path.dirname(os.path.realpath(__file__))
+DIR_NUMPYDATA = dir_path + "/NumpyData/"
+DIR_DATA = dir_path + "/Data/Data/"
 
 def get_mask(img, i):
     selection = SelectionWindow('Selection Window', img, i, connectivity=8)
@@ -34,7 +35,7 @@ def get_mask(img, i):
 for i in range(1367, 13786):
 
     num = str(i).zfill(7)
-    data = json.load(open(f"Data/Data/Descriptions/ISIC_{num}"))
+    data = json.load(open(DIR_DATA + f"Descriptions/ISIC_{num}"))
 
     if data["meta"]["clinical"]["benign_malignant"] is None:
         continue
@@ -42,10 +43,7 @@ for i in range(1367, 13786):
     if data["meta"]["clinical"]["benign_malignant"] != "malignant" and data["meta"]["clinical"]["benign_malignant"] != "benign":
         continue
 
-    # if data["meta"]["clinical"]["benign_malignant"] == "benign":
-    #     continue
-
-    img = cv2.imread(f"Data/Data/Images/ISIC_{num}.jpg")
+    img = cv2.imread(DIR_DATA + f"Images/ISIC_{num}.jpg")
     img = cv2.resize(img, (128, 128))
 
     get_mask(img, num)
@@ -53,11 +51,11 @@ for i in range(1367, 13786):
     # if all_black > 15500 or all_black < 9000:
     #     continue
 
-    with open(DIRECTORY + f"ISIC_{num}_IMG.npy", "w") as f:
-        np.save(DIRECTORY + f"ISIC_{num}_IMG", img)
+    with open(DIR_NUMPYDATA + f"ISIC_{num}_IMG.npy", "w") as f:
+        np.save(DIR_NUMPYDATA + f"ISIC_{num}_IMG", img)
     
-    # with open(DIRECTORY + f"ISIC_00{num}_MASK.npy", "w") as f:
-    #     np.save(DIRECTORY + f"ISIC_00{num}_MASK", mask)
+    with open(DIR_NUMPYDATA + f"ISIC_00{num}_MASK.npy", "w") as f:
+        np.save(DIR_NUMPYDATA + f"ISIC_00{num}_MASK", mask)
     
     # print("created")
 

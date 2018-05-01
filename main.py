@@ -10,9 +10,13 @@ import Mask.model as modellib
 import Mask.visualize as visualize
 from Mask.model import log
 
-MODEL_DIR = os.path.join(os.getcwd(), "logs")
-COCO_MODEL_PATH = os.path.join("~/DeepLearning/Uqido/Mask/", "mask_rcnn_coco.h5")
-
+dir_path = os.path.dirname(os.path.realpath(__file__))
+MODEL_DIR = dir_path + "/models/"
+COCO_MODEL_PATH = dir_path + "/Mask/mask_rcnn_coco.h5"
+if os.path.isfile(COCO_MODEL_PATH) == False:
+    raise Exception("You have to download mask_rcnn_coco.h5 inside Mask folder \n\
+    You can find it here: \
+    https://github.com/matterport/Mask_RCNN/releases/download/v2.0/mask_rcnn_coco.h5")
 
 class MolesConfig(Config):
     NAME = "moles"

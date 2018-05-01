@@ -11,8 +11,12 @@ import Mask.visualize as visualize
 from Mask.model import log
 
 np.set_printoptions(threshold=np.inf)
-MODEL_DIR = os.path.join(os.getcwd(), "logs")
-MODEL_PATH = "~/DeepLearning/Uqido/logs/moles20180227T1422/mask_rcnn_moles_0030.h5"
+dir_path = os.path.dirname(os.path.realpath(__file__))
+MODEL_DIR = dir_path + "/models/"
+MODEL_PATH = input("Insert the path of your trained model [" + dir_path + "/]: ")
+# "models/moles20180227T1422/mask_rcnn_moles_0030.h5"
+if os.path.isfile(MODEL_PATH) == False:
+    raise Exception(MODEL_PATH + " Does not exists")
 
 class CocoConfig(Config):
     NAME = "moles"

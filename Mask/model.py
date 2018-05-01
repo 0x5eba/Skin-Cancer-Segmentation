@@ -27,9 +27,6 @@ import keras.layers as KL
 import keras.initializers as KI
 import keras.engine as KE
 import keras.models as KM
-from keras.models import Sequential
-from Mnist.network import create_model
-
 
 DATASET = utils.Dataset
 
@@ -2234,8 +2231,6 @@ class MaskRCNN():
             workers = max(self.config.BATCH_SIZE // 2, 2)
 
         
-        # m = Sequential()
-        # m = create_model(m)
         self.keras_model.fit_generator(
             train_generator,
             # initial_epoch=self.epoch,
