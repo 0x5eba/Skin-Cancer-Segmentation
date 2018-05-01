@@ -13,10 +13,14 @@ from Mask.model import log
 np.set_printoptions(threshold=np.inf)
 dir_path = os.path.dirname(os.path.realpath(__file__))
 MODEL_DIR = dir_path + "/models/"
-MODEL_PATH = input("Insert the path of your trained model [" + dir_path + "/]: ")
-# "models/moles20180227T1422/mask_rcnn_moles_0030.h5"
+# Example : "models/moles20180227T1422/mask_rcnn_moles_0030.h5"
+MODEL_PATH = input(
+    "Insert the path of your trained model [" + dir_path + "/]: ")
+
 if os.path.isfile(MODEL_PATH) == False:
     raise Exception(MODEL_PATH + " Does not exists")
+
+
 
 class CocoConfig(Config):
     NAME = "moles"
@@ -38,14 +42,12 @@ model.load_weights(MODEL_PATH, by_name=True)
 class_names = ["BG", "malignant", "benign"]
 
 for i in range(13786):
-    # i = np.random.randint(0, 13786)
     num = str(i).zfill(5)
-    img = cv2.imread(f"Data/Data/Images/ISIC_00{num}.jpg")
+    img = cv2.imread(f"Data/Images/ISIC_00{num}.jpg")
     img = cv2.resize(img, (128, 128))
 
-    data = json.load(open(f"Data/Data/Descriptions/ISIC_00{num}"))
-    # if data["meta"]["clinical"]["benign_malignant"] != "malignant":
-    #     continue
+    data = json.load(open(f"Data/Descriptions/ISIC_00{num}"))
+
     print(data["meta"]["clinical"]["benign_malignant"])
     print(i)
     

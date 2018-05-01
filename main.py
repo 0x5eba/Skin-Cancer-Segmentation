@@ -101,6 +101,7 @@ dataset_val.prepare()
 
 del train_data
 del val_data
+
 # image_ids = np.random.choice(dataset_train.image_ids, 3)
 # for image_id in image_ids:
 #     image = dataset_train.load_image(image_id)

@@ -15,21 +15,11 @@ from Mask.magicwand import SelectionWindow
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 DIR_NUMPYDATA = dir_path + "/NumpyData/"
-DIR_DATA = dir_path + "/Data/Data/"
+DIR_DATA = dir_path + "/Data/"
 
 def get_mask(img, i):
-    selection = SelectionWindow('Selection Window', img, i, connectivity=8)
+    selection = SelectionWindow('Selection Window', img, i, DIR_NUMPYDATA, 8)
     selection.show()
-
-    # hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV_FULL)
-    # brown = cv2.inRange(hsv, (5, 0, 0), (15, 255, 255))
-    # magenta = cv2.inRange(hsv, (295, 0, 0), (305, 255, 255))
-    # # blue = cv2.inRange(hsv, (230, 50, 0), (250, 150, 255))
-    # mask = cv2.bitwise_or(brown, magenta)
-    # target = cv2.bitwise_and(img, img, mask=mask)
-    # black = cv2.inRange(target, (0, 0, 0), (0, 0, 255))
-    # tot_black = cv2.countNonZero(black)
-    # return target, tot_black
 
 
 for i in range(1367, 13786):
@@ -47,15 +37,7 @@ for i in range(1367, 13786):
     img = cv2.resize(img, (128, 128))
 
     get_mask(img, num)
-    
-    # if all_black > 15500 or all_black < 9000:
-    #     continue
 
     with open(DIR_NUMPYDATA + f"ISIC_{num}_IMG.npy", "w") as f:
         np.save(DIR_NUMPYDATA + f"ISIC_{num}_IMG", img)
     
-    with open(DIR_NUMPYDATA + f"ISIC_00{num}_MASK.npy", "w") as f:
-        np.save(DIR_NUMPYDATA + f"ISIC_00{num}_MASK", mask)
-    
-    # print("created")
-

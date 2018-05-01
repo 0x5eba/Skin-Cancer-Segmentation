@@ -12,7 +12,7 @@ class SelectionWindow:
 
     _displays = cycle(['selection', 'applied mask'])
 
-    def __init__(self, name, image, number, connectivity=4):
+    def __init__(self, name, image, number, numpy_path, connectivity):
 
         # general params
         self.name = name
@@ -34,7 +34,7 @@ class SelectionWindow:
         self._flood_mask = np.zeros((self._h+2, self._w+2), dtype=np.uint8)
 
         #self._path
-        self._path = f"/home/seba/DeepLearning/Uqido/NumpyData/ISIC_{number}_MASK.npy"
+        self._path = numpy_path + f"NumpyData/ISIC_{number}_MASK.npy"
         self.done = False
 
     def _onchange(self, pos):

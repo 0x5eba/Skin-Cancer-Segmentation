@@ -3,7 +3,8 @@ Classification and Segmentation with Mark-RCNN of Skin Cancer by ISIC dataset
 
 ## Setup
 
-1) Download the dataset from https://isic-archive.com/
+1) Download the dataset from https://isic-archive.com/ 
+    - You can download it with : python3 download_dataset.py
 
 2) python3 create_dataset.py : to get the numpy format of the image and the mask
 
