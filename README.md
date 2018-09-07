@@ -4,13 +4,17 @@ Classification and Segmentation with Mask-RCNN of Skin Cancer by ISIC dataset
 ## Setup
 
 1) Download the dataset from https://isic-archive.com/ 
-    - You can download from https://github.com/GalAvineri/ISIC-Archive-Downloader and do: python3 download_archive.py
+    - You can download it from https://github.com/GalAvineri/ISIC-Archive-Downloader 
+      To download the whole archive: `python3 download_archive.py`
 
-2) python3 main.py : to create the model 
+2) Download the dependency of the project: `pip3 install -r requirements.txt`
+
+3) To create the model: `python3 main.py` 
     - You also have to download the Coco Model, that you can find here: 
     https://github.com/matterport/Mask_RCNN/releases/download/v2.0/mask_rcnn_coco.h5
 
-3) python3 test.py : to test the model
+4) To test the model: `python3 test.py`
+
 
 ## Results
 
