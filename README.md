@@ -13,7 +13,7 @@ Classification and Segmentation with Mask-RCNN of Skin Cancer by ISIC dataset
 
         ├── Images/  (containing the .jpg file)
 
-        ├── Description/  (containing the json file)
+        ├── Descriptions/  (containing the json file)
 
         └── Segmentation/  (containing the .png file)
 
