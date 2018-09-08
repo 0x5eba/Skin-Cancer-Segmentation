@@ -97,7 +97,12 @@ if not os.path.exists(path_data):
 for filename in os.listdir(path_data+"Descriptions/"):
     data = json.load(open(path_data+"/Descriptions/"+filename))
     img = cv2.imread(path_data+"Images/"+filename+".jpg")
+    img = cv2.resize(img, (128, 128))
     mask = cv2.imread(path_data+"Segmentation/"+filename+"_expert.png")
+    mask = cv2.resize(mask, (128, 128))
+
+    if not mask or not img:
+        continue
     
     info = Metadata(data["meta"], data["dataset"], img, mask)
     all_info.append(info)

@@ -55,6 +55,9 @@ for filename in os.listdir(path_data+"Descriptions/"):
     img = cv2.imread(path_data+"Images/"+filename+".jpg")
     img = cv2.resize(img, (128, 128))
 
+    if not img:
+        continue
+
     # ground truth of the class
     print(data["meta"]["clinical"]["benign_malignant"])
     
