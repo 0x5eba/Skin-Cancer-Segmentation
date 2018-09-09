@@ -5,7 +5,7 @@ Classification and Segmentation with Mask-RCNN of Skin Cancer by ISIC dataset
 
 1) Download the dataset from https://isic-archive.com/ 
     - You can download it from https://github.com/GalAvineri/ISIC-Archive-Downloader 
-      To download the whole archive: `python3 download_archive.py`
+      To download the whole archive: `python3 download_archive.py -s`
       
    At the end, the directory of the data should be like this:
    
