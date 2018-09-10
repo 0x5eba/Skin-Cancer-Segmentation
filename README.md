@@ -13,7 +13,8 @@ Classification and Segmentation with Mask-RCNN of Skin Cancer by ISIC dataset
     Data/
     ├── Images/  (containing the .jpg file)
     ├── Descriptions/  (containing the json file)
-    └── Segmentation/  (containing the .png file)```
+    └── Segmentation/  (containing the .png file)
+    ```
 
 2) Download the dependency of the project: `pip3 install -r requirements.txt`
 
