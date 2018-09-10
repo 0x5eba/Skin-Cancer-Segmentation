@@ -9,13 +9,11 @@ Classification and Segmentation with Mask-RCNN of Skin Cancer by ISIC dataset
       
    At the end, the directory of the data should be like this:
    
-        Data/
-
-        ├── Images/  (containing the .jpg file)
-
-        ├── Descriptions/  (containing the json file)
-
-        └── Segmentation/  (containing the .png file)
+    ```
+    Data/
+    ├── Images/  (containing the .jpg file)
+    ├── Descriptions/  (containing the json file)
+    └── Segmentation/  (containing the .png file)```
 
 2) Download the dependency of the project: `pip3 install -r requirements.txt`
 
