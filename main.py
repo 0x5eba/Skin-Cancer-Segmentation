@@ -93,16 +93,26 @@ path_data = input("Insert the path of Data [ Link /home/../ISIC-Archive-Download
 if not os.path.exists(path_data):
     raise Exception(path_data + " Does not exists")
 
+warning = True
+
 # Load all the images, mask and description of the Dataset
 for filename in os.listdir(path_data+"Descriptions/"):
+    if len(filename) > 12:
+        if warning:
+            print("Maybe the filename is wrong, should be something like: ISIC_0000000 , not ISIC_0000000.json or something else")
+            print("Now the filename is "+ filename[:12]+ " check that is correct")
+            warning = False
+        filename = filename[:12]
+
     data = json.load(open(path_data+"/Descriptions/"+filename))
     img = cv2.imread(path_data+"Images/"+filename+".jpg")
+    if not img:
+        continue
     img = cv2.resize(img, (128, 128))
     mask = cv2.imread(path_data+"Segmentation/"+filename+"_expert.png")
-    mask = cv2.resize(mask, (128, 128))
-
-    if not mask or not img:
+    if not mask:
         continue
+    mask = cv2.resize(mask, (128, 128))
     
     info = Metadata(data["meta"], data["dataset"], img, mask)
     all_info.append(info)
