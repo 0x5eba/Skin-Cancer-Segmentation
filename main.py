@@ -105,12 +105,12 @@ for filename in os.listdir(path_data+"Descriptions/"):
         filename = filename[:12]
 
     data = json.load(open(path_data+"/Descriptions/"+filename))
-    img = cv2.imread(path_data+"Images/"+filename+".jpg")
-    if not img:
+    img = cv2.imread(path_data+"Images/"+filename+".jpeg")
+    if img is None:
         continue
     img = cv2.resize(img, (128, 128))
     mask = cv2.imread(path_data+"Segmentation/"+filename+"_expert.png")
-    if not mask:
+    if mask is None:
         continue
     mask = cv2.resize(mask, (128, 128))
     
@@ -136,6 +136,7 @@ del train_data
 del val_data
 
 # Show some random images to verify that everything is ok
+print(dataset_train.image_ids)
 image_ids = np.random.choice(dataset_train.image_ids, 3)
 for image_id in image_ids:
     image = dataset_train.load_image(image_id)
