@@ -1,14 +1,10 @@
 import os
 import numpy as np
-import matplotlib.pyplot as plt
 import cv2
-import json
-import glob
 
-import Mask.utils as utils
 import Mask.model as modellib
 import Mask.visualize as visualize
-from Mask.coco_config import CocoConfig
+from Mask.config.coco_config import CocoConfig
 
 np.set_printoptions(threshold=np.inf)
 
@@ -16,15 +12,8 @@ np.set_printoptions(threshold=np.inf)
 dir_path = os.path.dirname(os.path.realpath(__file__))
 MODEL_DIR = dir_path + "/models/"
 MODEL_PATH = './models/mask_rcnn_moles_0074.h5'#input("Insert the path of your trained model [ Like models/moles.../mask_rcnn_moles_0030.h5 ]: ")
-if os.path.isfile(MODEL_PATH) == False:
+if not os.path.isfile(MODEL_PATH):
     raise Exception(MODEL_PATH + " Does not exists")
-
-# path of Data that contain Descriptions and Images
-path_data = '/home/daniel/Desktop/ISIC-Archive-Downloader/Data/'#input("Insert the path of Data [ Link /home/../ISIC-Archive-Downloader/Data/ ] : ")
-if not os.path.exists(path_data):
-    raise Exception(path_data + " does not exists")
-
-
 
 # create and instance of config
 config = CocoConfig()
@@ -33,23 +22,25 @@ config = CocoConfig()
 model = modellib.MaskRCNN(mode="inference", model_dir=MODEL_DIR, config=config)
 model.load_weights(MODEL_PATH, by_name=True)
 
+# path of Data that contain Descriptions and Images
+path_data = './test_data/ISIC_0000002.jpeg'#input("Insert the path of Data [ Link /home/../ISIC-Archive-Downloader/Data/ ] : ")
+if not os.path.exists(path_data):
+    raise Exception(path_data + " does not exists")
+
 # background + (malignant , benign)
 class_names = ["BG", "malignant", "benign"]
 
-# find the largest number of image that you download
-all_desc_path = glob.glob(path_data + "Descriptions/ISIC_*")
-for filename in os.listdir(path_data+"Descriptions/"):
-    data = json.load(open(path_data+"Descriptions/"+filename))
-    img = cv2.imread(path_data+"Images/"+filename+".jpeg")
-    img = cv2.resize(img, (128, 128))   
+#data = json.load(open(path_data+"Descriptions/"+filename))
+img = cv2.imread(path_data)
+img = cv2.resize(img, (128, 128))
 
-    if img is None:
-        continue
+if img is None:
+    exit(1)
 
-    # ground truth of the class
-    print(data["meta"]["clinical"]["benign_malignant"])
-    
-    # predict the mask, bounding box and class of the image
-    r = model.detect([img])[0]
-    visualize.display_instances(img, r['rois'], r['masks'], r['class_ids'],
-                                class_names, r['scores'])
+# ground truth of the class
+#print(data["meta"]["clinical"]["benign_malignant"])
+
+# predict the mask, bounding box and class of the image
+r = model.detect([img])[0]
+visualize.display_instances(img, r['rois'], r['masks'], r['class_ids'],
+                            class_names, r['scores'])

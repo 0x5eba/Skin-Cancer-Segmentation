@@ -6,7 +6,9 @@ Copyright (c) 2017 Matterport, Inc.
 Licensed under the MIT License (see LICENSE for details)
 Written by Waleed Abdulla
 """
-from . import utils
+import Mask
+from Mask.data.dataset import Dataset
+import Mask.utils as utils
 import os
 from skimage.transform import resize as skimage_resize
 import sys
@@ -30,7 +32,7 @@ import keras.initializers as KI
 import keras.engine as KE
 import keras.models as KM
 
-DATASET = utils.Dataset
+DATASET = Dataset
 
 # Requires TensorFlow 1.3+ and Keras 2.0.8+.
 from distutils.version import LooseVersion

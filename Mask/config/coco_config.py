@@ -1,4 +1,4 @@
-from Mask.config import Config
+from Mask.config.config import Config
 
 class CocoConfig(Config):
     ''' 
