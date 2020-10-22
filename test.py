@@ -4,7 +4,7 @@ import cv2
 
 import Mask.model as modellib
 import Mask.visualize as visualize
-from Mask.config.coco_config import CocoConfig
+from Mask.meta.config.coco_config import CocoConfig
 
 np.set_printoptions(threshold=np.inf)
 
@@ -30,7 +30,7 @@ if not os.path.exists(path_data):
 # background + (malignant , benign)
 class_names = ["BG", "malignant", "benign"]
 
-#data = json.load(open(path_data+"Descriptions/"+filename))
+#meta = json.load(open(path_data+"Descriptions/"+filename))
 img = cv2.imread(path_data)
 img = cv2.resize(img, (128, 128))
 
@@ -38,7 +38,7 @@ if img is None:
     exit(1)
 
 # ground truth of the class
-#print(data["meta"]["clinical"]["benign_malignant"])
+#print(meta["meta"]["clinical"]["benign_malignant"])
 
 # predict the mask, bounding box and class of the image
 r = model.detect([img])[0]

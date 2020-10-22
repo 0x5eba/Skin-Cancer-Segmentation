@@ -1,55 +1,24 @@
 import numpy as np
 import os
 
-from Mask.config.moles_config import MolesConfig
 import Mask.model as modellib
 import Mask.visualize as visualize
-from Mask.data.read_files import read_all_files_async, read_all_files
-from Mask.data.mole_dataset import MoleDataset
+from Mask.meta.serialize_data import serialize_dataset,deserialize_dataset
 
 def main():
     dir_path = os.path.dirname(os.path.realpath(__file__))
     MODEL_DIR = dir_path + "/models/"
     COCO_MODEL_PATH = dir_path + "/Mask/mask_rcnn_coco.h5"
+    DATA_PATH = dir_path + "/Data/data_set.obj"
     MODEL_PATH = "/models/mask_rcnn_moles_0074.h5"
     ITERATION = 74
-    ASYNC_READ = True
     SHOW_SAMPLES = False
-    if not os.path.isfile(COCO_MODEL_PATH):
-        raise Exception("You have to download mask_rcnn_coco.h5 inside Mask folder \n\
-        You can find it here: https://github.com/matterport/Mask_RCNN/releases/download/v2.0/mask_rcnn_coco.h5")    
 
-    config = MolesConfig()
-    all_info = []
-
-    # path of Data that contain Descriptions and Images
-    path_data = './Data/'#input("Insert the path of Data [ Link /home/../ISIC-Archive-Downloader/Data/ ] : ")
-    if not os.path.exists(path_data):
-        raise Exception(path_data + " Does not exists")
-
-    warning = True
-
-    # Load all the images, mask and description of the Dataset
-    print('start loading images...')
-    all_info = read_all_files_async(path_data) if ASYNC_READ else read_all_files(path_data)
-
-
-    # split the data into train and test
-    percentual = (len(all_info)*30)//100
-    np.random.shuffle(all_info)
-    train_data = all_info[:-percentual]
-    val_data = all_info[percentual+1:]
-    del all_info
-
-    # processing the data
-    dataset_train = MoleDataset()
-    dataset_train.load_shapes(train_data, config.IMAGE_SHAPE[0], config.IMAGE_SHAPE[1])
-    dataset_train.prepare()
-    dataset_val = MoleDataset()
-    dataset_val.load_shapes(val_data, config.IMAGE_SHAPE[0], config.IMAGE_SHAPE[1])
-    dataset_val.prepare()
-    del train_data
-    del val_data
+    if not os.path.exists(DATA_PATH):
+        print('No preprocessed version found')
+        dataset_train, dataset_val = serialize_dataset(DATA_PATH)
+    else:
+        dataset_train, dataset_val = deserialize_dataset(DATA_PATH)
 
     # Show some random images to verify that everything is ok
     if SHOW_SAMPLES:
@@ -66,7 +35,7 @@ def main():
 
     # Use as start point the coco model
     print('loading weights...')
-    model.load_weights(COCO_MODEL_PATH, by_name=True,
+    model.load_weights(MODEL_PATH, by_name=True,
                     exclude=["mrcnn_class_logits", "mrcnn_bbox_fc",
                                 "mrcnn_bbox", "mrcnn_mask"])
 

@@ -497,7 +497,7 @@ def generate_pyramid_anchors(scales, ratios, feature_shapes, feature_strides,
 ############################################################
 
 def trim_zeros(x):
-    """It's common to have tensors larger than the available data and
+    """It's common to have tensors larger than the available meta and
     pad with zeros. This function removes rows that are all zeros.
 
     x: [rows, columns].
@@ -661,7 +661,7 @@ def batch_slice(inputs, graph_fn, batch_size, names=None):
 
     inputs: list of tensors. All must have the same first dimension length
     graph_fn: A function that returns a TF tensor that's part of a graph.
-    batch_size: number of slices to divide the data into.
+    batch_size: number of slices to divide the meta into.
     names: If provided, assigns names to the resulting tensors.
     """
     if not isinstance(inputs, list):

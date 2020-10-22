@@ -7,7 +7,7 @@ Licensed under the MIT License (see LICENSE for details)
 Written by Waleed Abdulla
 """
 import Mask
-from Mask.data.dataset import Dataset
+from Mask.meta.dataset import Dataset
 import Mask.utils as utils
 import os
 from skimage.transform import resize as skimage_resize
@@ -359,7 +359,7 @@ class PyramidROIAlign(KE.Layer):
     - boxes: [batch, num_boxes, (y1, x1, y2, x2)] in normalized
              coordinates. Possibly padded with zeros if not enough
              boxes to fill the array.
-    - image_meta: [batch, (meta data)] Image details. See compose_image_meta()
+    - image_meta: [batch, (meta meta)] Image details. See compose_image_meta()
     - Feature maps: List of feature maps from different levels of the pyramid.
                     Each is [batch, height, width, channels]
 
@@ -918,7 +918,7 @@ def fpn_classifier_graph(rois, feature_maps, image_meta,
           coordinates.
     feature_maps: List of feature maps from different layers of the pyramid,
                   [P2, P3, P4, P5]. Each has a different resolution.
-    - image_meta: [batch, (meta data)] Image details. See compose_image_meta()
+    - image_meta: [batch, (meta meta)] Image details. See compose_image_meta()
     pool_size: The width of the square feature map generated from ROI Pooling.
     num_classes: number of classes, which determines the depth of the results
     train_bn: Boolean. Train or freeze Batch Norm layers
@@ -972,7 +972,7 @@ def build_fpn_mask_graph(rois, feature_maps, image_meta,
           coordinates.
     feature_maps: List of feature maps from different layers of the pyramid,
                   [P2, P3, P4, P5]. Each has a different resolution.
-    image_meta: [batch, (meta data)] Image details. See compose_image_meta()
+    image_meta: [batch, (meta meta)] Image details. See compose_image_meta()
     pool_size: The width of the square feature map generated from ROI Pooling.
     num_classes: number of classes, which determines the depth of the results
     train_bn: Boolean. Train or freeze Batch Norm layers
@@ -1200,7 +1200,7 @@ def mrcnn_mask_loss_graph(target_masks, target_class_ids, pred_masks):
 
 def load_image_gt(dataset, config, image_id, augment=False, augmentation=None,
                   use_mini_mask=False):
-    """Load and return ground truth data for an image (image, mask, bounding boxes).
+    """Load and return ground truth meta for an image (image, mask, bounding boxes).
 
     augment: (deprecated. Use augmentation instead). If true, apply random
         image augmentation. Currently, only horizontal flipping is offered.
@@ -1294,7 +1294,7 @@ def load_image_gt(dataset, config, image_id, augment=False, augmentation=None,
     if use_mini_mask:
         mask = utils.minimize_mask(bbox, mask, config.MINI_MASK_SHAPE)
 
-    # Image meta data
+    # Image meta meta
     image_meta = compose_image_meta(image_id, original_shape, image.shape,
                                     window, scale, active_class_ids)
 
@@ -1649,7 +1649,7 @@ def data_generator(dataset, config, shuffle=True, augment=False, augmentation=No
     """A generator that returns images and corresponding target class ids,
     bounding box deltas, and masks.
 
-    dataset: The Dataset object to pick data from
+    dataset: The Dataset object to pick meta from
     config: The model config object
     shuffle: If True, shuffles the samples before every epoch
     augment: (deprecated. Use augmentation instead). If true, apply random
@@ -1673,7 +1673,7 @@ def data_generator(dataset, config, shuffle=True, augment=False, augmentation=No
     of the lists differs depending on the received arguments:
     inputs list:
     - images: [batch, H, W, C]
-    - image_meta: [batch, (meta data)] Image details. See compose_image_meta()
+    - image_meta: [batch, (meta meta)] Image details. See compose_image_meta()
     - rpn_match: [batch, N] Integer (1=positive anchor, -1=negative, 0=neutral)
     - rpn_bbox: [batch, N, (dy, dx, log(dh), log(dw))] Anchor bbox deltas.
     - gt_class_ids: [batch, MAX_GT_INSTANCES] Integer class IDs
@@ -2398,7 +2398,7 @@ class MaskRCNN():
 
         Returns 3 Numpy matrices:
         molded_images: [N, h, w, 3]. Images resized and normalized.
-        image_metas: [N, length of meta data]. Details about each image.
+        image_metas: [N, length of meta meta]. Details about each image.
         windows: [N, (y1, x1, y2, x2)]. The portion of the image that has the
             original image (padding excluded).
         """
@@ -2558,7 +2558,7 @@ class MaskRCNN():
         the model.
 
         molded_images: List of images loaded using load_image_gt()
-        image_metas: image meta data, also returned by load_image_gt()
+        image_metas: image meta meta, also returned by load_image_gt()
 
         Returns a list of dicts, one dict per image. The dict contains:
         rois: [N, (y1, x1, y2, x2)] detection bounding boxes

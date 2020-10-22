@@ -2,10 +2,8 @@ import cv2
 import numpy as np
 import json
 import os
-import matplotlib.pyplot as plt
 
-
-from Mask.config import Config
+from Mask.meta.config import Config
 import Mask.utils as utils
 import Mask.model as modellib
 import Mask.visualize as visualize
@@ -53,7 +51,7 @@ class Metadata:
 class MoleDataset(utils.Dataset):
     ''' 
     MoleDataset:
-        Used to process the data
+        Used to process the meta
     '''
     def load_shapes(self, dataset, height, width):
         ''' Add the 2 class of skin cancer and put the metadata inside the model'''
@@ -118,14 +116,14 @@ for filename in os.listdir(path_data+"Descriptions/"):
     all_info.append(info)
 
 
-# split the data into train and test
+# split the meta into train and test
 percentual = (len(all_info)*30)//100
 np.random.shuffle(all_info)
 train_data = all_info[:-percentual]
 val_data = all_info[percentual+1:]
 del all_info
 
-# processing the data
+# processing the meta
 dataset_train = MoleDataset()
 dataset_train.load_shapes(train_data, config.IMAGE_SHAPE[0], config.IMAGE_SHAPE[1])
 dataset_train.prepare()

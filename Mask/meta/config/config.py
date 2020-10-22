@@ -216,7 +216,7 @@ class Config(object):
             self.IMAGE_SHAPE = np.array(
                 [self.IMAGE_MAX_DIM, self.IMAGE_MAX_DIM, 3])
 
-        # Image meta data length
+        # Image meta meta length
         # See compose_image_meta() for details
         self.IMAGE_META_SIZE = 1 + 3 + 3 + 4 + 1 + self.NUM_CLASSES
 

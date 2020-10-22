@@ -151,7 +151,7 @@ if __name__ == "__main__":
     print('x_train shape:', x_train.shape)
     print('x_test shape:', x_test.shape)
 
-    # Build data generator and model
+    # Build meta generator and model
     datagen = ImageDataGenerator()
     model = build_model(x_train, 10)
 
