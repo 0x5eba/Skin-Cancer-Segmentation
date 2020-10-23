@@ -29,8 +29,10 @@ def read_file(filename_and_path):
 
 def read_all_files_async(path_data, pool_size=6):
     with mp.Pool(pool_size) as pool:
-        x = zip(os.listdir(path_data + "Descriptions/"), itertools.cycle([path_data]))
-        all_info = list(tqdm(pool.imap(read_file, x), total=36065))
+        files = os.listdir(path_data + "Descriptions/")
+        x = zip(files, itertools.cycle([path_data]))
+        all_info = list(tqdm(pool.imap(read_file, x), total=len(files)))
+        all_info = [info for info in all_info if info is not None]
 
     pool.join()
     return all_info

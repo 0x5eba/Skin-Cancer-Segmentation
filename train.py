@@ -3,6 +3,7 @@ import os
 
 import Mask.model as modellib
 import Mask.visualize as visualize
+from Mask.meta.config.moles_config import MolesConfig
 from Mask.meta.serialize_data import serialize_dataset,deserialize_dataset
 
 def main():
@@ -14,9 +15,11 @@ def main():
     ITERATION = 74
     SHOW_SAMPLES = False
 
+    config = MolesConfig()
+
     if not os.path.exists(DATA_PATH):
         print('No preprocessed version found')
-        dataset_train, dataset_val = serialize_dataset(DATA_PATH)
+        dataset_train, dataset_val = serialize_dataset(DATA_PATH, config)
     else:
         dataset_train, dataset_val = deserialize_dataset(DATA_PATH)
 

@@ -6,8 +6,7 @@ from Mask.meta.mole_dataset import MoleDataset
 from Mask.meta.read_files import read_all_files_async, read_all_files
 
 
-def serialize_dataset(file_path, ASYNC_READ=True):
-    config = MolesConfig()
+def serialize_dataset(file_path, config, ASYNC_READ=True):
     all_info = []
 
     # path of Data that contain Descriptions and Images
@@ -38,14 +37,14 @@ def serialize_dataset(file_path, ASYNC_READ=True):
     del train_data
     del val_data
 
-
-    with open(file_path) as f:
+    with open(os.path.normpath(file_path), 'wb+') as f:
         pickle.dump([dataset_train, dataset_val], f)
 
     return dataset_train, dataset_val
 
+
 def deserialize_dataset(file_path):
-    with open(file_path) as f:
+    with open(file_path, 'rb') as f:
         dataset_train, dataset_val = pickle.load(f)
 
     return dataset_train, dataset_val
