@@ -10,7 +10,7 @@ def main():
     dir_path = os.path.dirname(os.path.realpath(__file__))
     MODEL_DIR = dir_path + "/models/"
     COCO_MODEL_PATH = dir_path + "/Mask/mask_rcnn_coco.h5"
-    DATA_PATH = dir_path + "/Data/data_set.obj"
+    DATA_PATH = COCO_MODEL_PATH #dir_path + "/Data/data_set.obj"
     MODEL_PATH = "/models/mask_rcnn_moles_0074.h5"
     ITERATION = 74
     SHOW_SAMPLES = False

@@ -1,7 +1,6 @@
 import pickle
 import os
 import numpy as np
-from Mask.meta.config.moles_config import MolesConfig
 from Mask.meta.mole_dataset import MoleDataset
 from Mask.meta.read_files import read_all_files_async, read_all_files
 
