@@ -1,29 +1,23 @@
-import Mask.model as modellib
 import os
 import tensorflow as tf
-import keras as K
 
-from Mask.meta.config.moles_config import MolesConfig
+import Mask.model as modellib
+from Mask.meta.config.coco_config import CocoConfig
 
+# path of the trained model
 dir_path = os.path.dirname(os.path.realpath(__file__))
 MODEL_DIR = dir_path + "/models/"
-MODEL_PATH = MODEL_DIR + "/mask_rcnn_moles_0074.h5"
+MODEL_PATH = './models/mask_rcnn_moles_0074.h5'#input("Insert the path of your trained model [ Like models/moles.../mask_rcnn_moles_0030.h5 ]: ")
+SAVE_PATH = './models/saved_model'
+if not os.path.isfile(MODEL_PATH):
+    raise Exception(MODEL_PATH + " Does not exists")
 
-# Create the MaskRCNN model
-config = MolesConfig()
-print('creating model...')
-model = modellib.MaskRCNN(mode="training", config=config, model_dir=MODEL_DIR)
+# create and instance of config
+config = CocoConfig()
 
-# load weights
-print('loading weights...')
-model.load_weights(MODEL_PATH, by_name=True,)
+# take the trained model
+model = modellib.MaskRCNN(mode="inference", model_dir=MODEL_DIR, config=config)
+model.load_weights(MODEL_PATH, by_name=True)
 
-inputs = model.keras_model.inputs
-inputs = { tensor.op.name: tensor for tensor in inputs }
-outputs = model.keras_model.outputs
-outputs = { tensor.op.name: tensor for tensor in outputs }
-
-model.keras_model.save("./models/save_model")
-
-#K.models.save_model(model.keras_model, , save_format="tf")
+tf.keras.models.save_model(model.keras_model, SAVE_PATH, save_format='tf')
 

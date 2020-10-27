@@ -25,6 +25,7 @@ from collections import OrderedDict
 import numpy as np
 import scipy.misc
 import tensorflow as tf
+from tensorflow import keras
 import keras
 import keras.backend as K
 import keras.layers as KL
