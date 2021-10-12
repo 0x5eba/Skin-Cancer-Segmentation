@@ -5,7 +5,7 @@ Keras-Applications==1.0.2
 Keras-Preprocessing==1.0.1
 matplotlib==2.2.2
 numpy==1.15.4
-opencv-python==3.4.3.18
+opencv-python==4.2.0.32
 pandas==0.23.3
 Pillow==5.3.0
 requests==2.20.1
